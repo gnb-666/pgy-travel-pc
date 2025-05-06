@@ -1,70 +1,59 @@
-# Getting Started with Create React App
+# 旅游日记管理系统
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+这是一个用于管理旅游日记的PC端管理系统，提供了日记审核、用户管理等功能。
 
-## Available Scripts
+## 功能特点
 
-In the project directory, you can run:
+- 旅游日记审核管理（通过/驳回）
+- 用户数据管理
+- 数据统计和概览
+- 多级权限控制
 
-### `npm start`
+## 安装指南
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+确保你的系统已安装Node.js环境，然后执行以下命令安装依赖：
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```bash
+npm install
+```
 
-### `npm test`
+## 运行项目
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+安装完依赖后，执行以下命令启动开发服务器：
 
-### `npm run build`
+```bash
+npm run dev
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+启动成功后，在浏览器中访问：`http://localhost:3000` 即可打开管理系统。
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 账户信息
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+系统预设了两个账户，分别具有不同的权限：
 
-### `npm run eject`
+1. **管理员账户**
+   - 用户名：admin
+   - 密码：admin123
+   - 权限：所有功能的完整访问权限
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+2. **审核员账户**
+   - 用户名：auditor
+   - 密码：auditor123
+   - 权限：仅限于日记审核功能
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 系统要求
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- Node.js 14.0+
+- 现代浏览器（Chrome、Firefox、Safari、Edge等）
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 技术栈
 
-## Learn More
+- 前端：React、TDesign-React组件库
+- 后端：Express、MongoDB
+- 构建工具：Vite
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 注意事项
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- 首次使用请确保后端服务已启动
+- 后端API默认地址为：http://localhost:3001
+- 如需修改API地址，请编辑`src/service/axios.js`文件中的baseURL

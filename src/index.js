@@ -1,17 +1,34 @@
+// 旅游日记应用路由配置
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import 'tdesign-react/es/style/index.css';
+import './assets/tailwindcss.css'
+import './assets/index.css';
+import ProtectedRoute from './ProtectedRoute'
+import { HashRouter, Route, Routes } from "react-router-dom";
+import App from "./App";
+import ManagePage from "./page/ManagePage";
+import LoginPage from './page/LoginPage';
+import PublicRoute from "./PublicRoute";
+import DashboardPage from './page/DashboardPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+    <HashRouter>
+        <Routes>
+            <Route path="/" element={
+                <PublicRoute>
+                    <LoginPage />
+                </PublicRoute>
+            } />
+            <Route path="/lng" element={
+                <ProtectedRoute>
+                    <App />
+                </ProtectedRoute>
+            }>
+                <Route path="all" element={<DashboardPage />} />
+                <Route path="trends" element={<ManagePage/>} />
+            </Route>
+        </Routes>
+    </HashRouter>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

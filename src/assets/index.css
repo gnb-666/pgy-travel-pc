@@ -1,0 +1,61 @@
+html,
+body {
+    background-image: url("./images/机器风.jpg");
+    background-size: 100% 100%;
+    height: 100%;
+}
+
+#root {
+    height: 100%;
+}
+
+:root {
+    --gradient-start: #209cff;
+    /* 默认起始颜色 */
+    --gradient-end: #68e0cf;
+    /* 默认结束颜色 */
+    --gradient-color-start: rgba(255, 255, 255, 0);
+    --gradient-color-end: rgba(255, 255, 255, 1);
+}
+
+.gradient-text-x {
+    background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.gradient-text-y {
+    background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-end));
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.login .t-input {
+    height: 40px !important;
+}
+
+.t-input .t-align-left {
+    height: 100% !important;
+}
+
+.gradient-background {
+    background: linear-gradient(to right,
+            var(--gradient-color-start) 0%,
+            var(--gradient-color-end) 50%,
+            var(--gradient-color-start) 100%);
+    /* 调整宽度和高度以适应你的需求 */
+    width: 100%;
+}
+
+.t-layout {
+    height: 100%;
+}
+
+.t-layout {
+    overflow: auto;
+}
+
+
+.t-form-item__year {
+    justify-content: center;
+}

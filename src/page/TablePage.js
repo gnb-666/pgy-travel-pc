@@ -5,12 +5,16 @@ import { Modal } from 'antd';
 import ImageGallery from 'react-image-gallery';
 import { reviewTravelNote, deleteTravelNote, restoreTravelNote } from '../service/api';
 
+const userData = JSON.parse(localStorage.getItem('travelUserData') || '{}');
+const userRole = Number(userData.role); // 强制转为数字，防止类型不一致
+
 const TravelNotesTable = ({ data = [], fetchData, loading }) => {
     // let JSONDATA = JSON.parse(localStorage.getItem('adminData'))
     const [isDialogVisible, setIsDialogVisible] = useState(false);
     const [currentRow, setCurrentRow] = useState(null);
     const [rejectReason, setRejectReason] = useState('');
     const [actionLoading, setActionLoading] = useState(false);
+    const [expandedRows, setExpandedRows] = useState(new Set()); // 新增：记录展开的行
     
     // 根据状态获取对应的标签颜色和文本
     const getStatusTag = (state) => {
@@ -142,6 +146,48 @@ const TravelNotesTable = ({ data = [], fetchData, loading }) => {
         }
     };
 
+    // 处理内容展开/收起
+    const handleContentToggle = (rowId) => {
+        setExpandedRows(prev => {
+            const newSet = new Set(prev);
+            if (newSet.has(rowId)) {
+                newSet.delete(rowId);
+            } else {
+                newSet.add(rowId);
+            }
+            return newSet;
+        });
+    };
+
+    // 渲染内容，限制行数
+    const renderContent = (content, rowId) => {
+        if (!content) return '-';
+        
+        const isExpanded = expandedRows.has(rowId);
+        const lines = content.split('\n');
+        const displayLines = isExpanded ? lines : lines.slice(0, 5);
+        
+        return (
+            <div 
+                style={{ 
+                    cursor: 'pointer',
+                    maxHeight: isExpanded ? 'none' : '100px',
+                    overflow: 'hidden'
+                }}
+                onClick={() => handleContentToggle(rowId)}
+            >
+                {displayLines.map((line, index) => (
+                    <div key={index}>{line}</div>
+                ))}
+                {lines.length > 5 && (
+                    <div style={{ color: '#0052d9', marginTop: '4px' }}>
+                        {isExpanded ? '收起' : `展开(${lines.length - 5}行)`}
+                    </div>
+                )}
+            </div>
+        );
+    };
+
     // 定义表格列
     const columns = [
         { colKey: 'title', title: '标题' },
@@ -159,7 +205,11 @@ const TravelNotesTable = ({ data = [], fetchData, loading }) => {
                 return row?.userInfo?.username
             },
         },
-        { colKey: 'content', title: '内容' },
+        { 
+            colKey: 'content', 
+            title: '内容',
+            cell: ({ row }) => renderContent(row.content, row._id)
+        },
         {
             colKey: 'imgList',
             title: '图片',
@@ -194,10 +244,13 @@ const TravelNotesTable = ({ data = [], fetchData, loading }) => {
                                 <Button theme="warning" size="small" onClick={() => handleReview(row, 2)}>驳回</Button>
                             </>
                         )}
-                        {row.isDeleted ? (
-                            <Button theme="primary" size="small" onClick={() => handleRestore(row._id)}>恢复</Button>
-                        ) : (
-                            <Button theme="danger" size="small" onClick={() => handleDelete(row)}>删除</Button>
+                        {/* 只有管理员才显示删除/恢复按钮 */}
+                        {userRole === 0 && (
+                            row.isDeleted ? (
+                                <Button theme="primary" size="small" onClick={() => handleRestore(row._id)}>恢复</Button>
+                            ) : (
+                                <Button theme="danger" size="small" onClick={() => handleDelete(row)}>删除</Button>
+                            )
                         )}
                     </div>
                 );
